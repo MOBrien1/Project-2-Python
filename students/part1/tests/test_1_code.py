@@ -1,3 +1,7 @@
+import json
+with open("data/forecast_5days_a.json") as f:
+    forecast_file = json.load(json_file)
+
 def process_weather(forecast_file):
     """Converts raw weather data into meaningful text.
 
@@ -21,25 +25,6 @@ def process_weather(forecast_file):
     #Chance of rain:  
 #Nighttime: 
     #Chance of rain:  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     with open(forecast_file) as f:
