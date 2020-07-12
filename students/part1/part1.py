@@ -70,20 +70,23 @@ def process_weather(forecast_file):
     day_1 = {}
     for days in forecast_file["DailyForecasts"][0:1]:
         Date_1 = convert_date(days["Date"])
-        Mintemp = convert_f_to_c(days["Temperature"]["Minimum"]["Value"]) 
-        Maxtemp = convert_f_to_c(days["Temperature"]["Maximum"]["Value"])
+        Mintemp_1 = convert_f_to_c(days["Temperature"]["Minimum"]["Value"]) 
+        Maxtemp_1 = convert_f_to_c(days["Temperature"]["Maximum"]["Value"])
         Dayrainprob = (days["Day"]["RainProbability"])
         Daylongphrase = (days["Day"]["LongPhrase"])
         Nightrainprob = (days["Night"]["RainProbability"])
         Nightlongphrase = (days["Night"]["LongPhrase"])
 
-        day_1["Date"] = Date_1
-        day_1["Minimum Temperature"] = Mintemp
-        day_1["Maximum Temperature"] = Maxtemp
-        day_1["Daytime"] = Daylongphrase
-        day_1["Chance of rain"] = Dayrainprob
-        day_1["Nighttime"] = Nightlongphrase
-        day_1["Night Chance of rain"] = Nightrainprob
+        MintempF_1 = days["Temperature"]["Minimum"]["Value"]
+        MaxtempF_1 = days["Temperature"]["Maximum"]["Value"]
+
+        #day_1["Date"] = Date_1
+        #day_1["Minimum Temperature"] = Mintemp_1
+        #day_1["Maximum Temperature"] = Maxtemp_1
+        #day_1["Daytime"] = Daylongphrase
+        #day_1["Chance of rain"] = Dayrainprob
+        #day_1["Nighttime"] = Nightlongphrase
+        #day_1["Night Chance of rain"] = Nightrainprob
 
 # 20/06/2020
     day_2 = {}
@@ -95,6 +98,9 @@ def process_weather(forecast_file):
         Daylongphrase = (days["Day"]["LongPhrase"])
         Nightrainprob = (days["Night"]["RainProbability"])
         Nightlongphrase = (days["Night"]["LongPhrase"])
+
+        MintempF_2 = days["Temperature"]["Minimum"]["Value"]
+        MaxtempF_2 = days["Temperature"]["Maximum"]["Value"]
 
         day_2["Date"] = Date_2
         day_2["Minimum Temperature"] = Mintemp
@@ -115,6 +121,9 @@ def process_weather(forecast_file):
         Nightrainprob = (days["Night"]["RainProbability"])
         Nightlongphrase = (days["Night"]["LongPhrase"])
 
+        MintempF_3 = int(days["Temperature"]["Minimum"]["Value"])
+        MaxtempF_3 = int(days["Temperature"]["Maximum"]["Value"])
+
         day_3["Date"] = Date_3
         day_3["Minimum Temperature"] = Mintemp
         day_3["Maximum Temperature"] = Maxtemp
@@ -134,6 +143,9 @@ def process_weather(forecast_file):
         Nightrainprob = (days["Night"]["RainProbability"])
         Nightlongphrase = (days["Night"]["LongPhrase"])
 
+        MintempF_4 = int(days["Temperature"]["Minimum"]["Value"])
+        MaxtempF_4 = int(days["Temperature"]["Maximum"]["Value"])
+
         day_4["Date"] = Date_4
         day_4["Minimum Temperature"] = Mintemp
         day_4["Maximum Temperature"] = Maxtemp
@@ -146,12 +158,15 @@ def process_weather(forecast_file):
     day_5 = {}
     for days in forecast_file["DailyForecasts"][4:5]:
         Date_5 = convert_date(days["Date"])
-        Mintemp = convert_f_to_c(days["Temperature"]["Minimum"]["Value"]) 
+        Mintemp_5 = convert_f_to_c(days["Temperature"]["Minimum"]["Value"]) 
         Maxtemp = convert_f_to_c(days["Temperature"]["Maximum"]["Value"])
         Dayrainprob = (days["Day"]["RainProbability"])
         Daylongphrase = (days["Day"]["LongPhrase"])
         Nightrainprob = (days["Night"]["RainProbability"])
         Nightlongphrase = (days["Night"]["LongPhrase"])
+
+        MintempF_5 = int(days["Temperature"]["Minimum"]["Value"])
+        MaxtempF_5 = int(days["Temperature"]["Maximum"]["Value"])
 
         day_5["Date"] = Date_5
         day_5["Minimum Temperature"] = Mintemp
@@ -164,7 +179,7 @@ def process_weather(forecast_file):
     #print(f" {day_1}\n{day_2}\n{day_3}\n{day_4}\n{day_5} ")
 #5 Day Overview
     alldaysmin = []
-    alldaysmin.append([Date_1, day_1["Minimum Temperature"]])
+    alldaysmin.append([Date_1, Mintemp_1])
     alldaysmin.append([Date_2, day_2["Minimum Temperature"]])
     alldaysmin.append([Date_3, day_3["Minimum Temperature"]])
     alldaysmin.append([Date_4, day_4["Minimum Temperature"]])
@@ -173,18 +188,37 @@ def process_weather(forecast_file):
     
 
     alldaysmax = []
-    alldaysmax.append([day_1["Maximum Temperature"], Date_1])
+    alldaysmax.append([Maxtemp_1, Date_1])
     alldaysmax.append([day_2["Maximum Temperature"], Date_2])
     alldaysmax.append([day_3["Maximum Temperature"], Date_3])
     alldaysmax.append([day_4["Maximum Temperature"],Date_4])
     alldaysmax.append([day_5["Maximum Temperature"], Date_5])
     print(f"The highest temperature will be {(max(alldaysmax))[0]}, and will occur on {(max(alldaysmax))[1]}.")
         
-        
-    #print(f"The highest temperature will be {(max((alldaysmax)[0:5]))}, and will occur on {(max(alldaysmax))[0]}")
-#The average low this week is 11.7°C.
+    #avrerage low
+    alldaysmin_F = []
+    alldaysmin_F.append(MintempF_1)
+    alldaysmin_F.append(MintempF_2)
+    alldaysmin_F.append(MintempF_3)
+    alldaysmin_F.append(MintempF_4)
+    alldaysmin_F.append(MintempF_5)
+    lownum_items = (len(alldaysmin_F))
+    lowtotal = (sum(alldaysmin_F))
+    low_avr = float(calculate_mean(lowtotal, lownum_items))
+    print(f"The average low this week is {(convert_f_to_c(low_avr))}.")
 
-#The average high this week is 20.1°C.
+    #The average high 
+    alldaysmax_F = []
+    alldaysmax_F.append(MaxtempF_1)
+    alldaysmax_F.append(MaxtempF_2)
+    alldaysmax_F.append(MaxtempF_3)
+    alldaysmax_F.append(MaxtempF_4)
+    alldaysmax_F.append(MaxtempF_5)
+    
+    highnum_items = (len(alldaysmax_F))
+    hightotal = (sum(alldaysmax_F))
+    high_avr = float(calculate_mean(hightotal, highnum_items))
+    print(f"The average high this week is {(convert_f_to_c(high_avr))}.")
 
 
 #if __name__ == "__main__":
