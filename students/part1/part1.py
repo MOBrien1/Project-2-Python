@@ -35,7 +35,8 @@ def convert_f_to_c(temp_in_farenheit):
     """
     temp_in_farenheit = (temp_in_farenheit - 32) / (9/5)
     temp_in_farenheit_rounded = round(temp_in_farenheit,1)
-    return f"{temp_in_farenheit_rounded}{DEGREE_SYBMOL}"
+    tempf_to_c = float(temp_in_farenheit_rounded)
+    return f"{tempf_to_c}{DEGREE_SYBMOL}"
 
 def calculate_mean(total, num_items):
     """Calculates the mean.
@@ -47,7 +48,7 @@ def calculate_mean(total, num_items):
         An integer representing the mean of the numbers."""
     
     result = int(total) / int(num_items)
-    return f"{(round(result))}"
+    return f"{(round(result,1))}"
 
 def process_weather(forecast_file):
 
@@ -166,17 +167,17 @@ def process_weather(forecast_file):
         alldaysmax = []
         alldaysmin_F = []
         alldaysmax_F = []
-        alldaysmin.append([Date_1, Mintemp_1])
-        alldaysmin.append([Date_2, Mintemp_2])
-        alldaysmin.append([Date_3, Mintemp_3])
-        alldaysmin.append([Date_4, Mintemp_4])
-        alldaysmin.append([Date_5, Mintemp_5])
+        alldaysmin.append([MintempF_1, Date_1])
+        alldaysmin.append([MintempF_2, Date_2])
+        alldaysmin.append([MintempF_3, Date_3])
+        alldaysmin.append([MintempF_4, Date_4])
+        alldaysmin.append([MintempF_5, Date_5])
 
-        alldaysmax.append([Maxtemp_1, Date_1])
-        alldaysmax.append([Maxtemp_2, Date_2])
-        alldaysmax.append([Maxtemp_3, Date_3])
-        alldaysmax.append([Maxtemp_4,Date_4])
-        alldaysmax.append([Maxtemp_5, Date_5])
+        alldaysmax.append([MaxtempF_1, Date_1])
+        alldaysmax.append([MaxtempF_2, Date_2])
+        alldaysmax.append([MaxtempF_3, Date_3])
+        alldaysmax.append([MaxtempF_4, Date_4])
+        alldaysmax.append([MaxtempF_5, Date_5])
 
         alldaysmin_F.append(MintempF_1)
         alldaysmin_F.append(MintempF_2)
@@ -196,8 +197,10 @@ def process_weather(forecast_file):
         highnum_items = (len(alldaysmax_F))
         hightotal = (sum(alldaysmax_F))
         high_avr = float(calculate_mean(hightotal, highnum_items))
+        lowest_temp = min(alldaysmin)
+        highest_temp = max(alldaysmax)
 
-        return f"5 Day Overview\n    The lowest temperature will be {(min(alldaysmin))[1]}, and will occur on {(min(alldaysmin))[0]}.\n    The highest temperature will be {(max(alldaysmax))[0]}, and will occur on {(max(alldaysmax))[1]}.\n    The average low this week is {(convert_f_to_c(low_avr))}.\n    The average high this week is {(convert_f_to_c(high_avr))}.\n-------- {Date_1} --------\nMinimum Temperature: {Mintemp_1}\nMaximum Temperature: {Maxtemp_1}\nDaytime: {Daylongphrase_1}\n    Chance of rain: {Dayrainprob_1}%\nNightime: {Nightlongphrase_1}\n    Chance of rain: {Nightrainprob_1}%\n-------- {Date_2} --------\nMinimum Temperature: {Mintemp_2}\nMaximum Temperature: {Maxtemp_2}\nDaytime: {Daylongphrase_2}\n    Chance of rain: {Dayrainprob_2}%\nNightime: {Nightlongphrase_2}\n    Chance of rain: {Nightrainprob_2}%\n-------- {Date_3} --------\nMinimum Temperature: {Mintemp_3}\nMaximum Temperature: {Maxtemp_3}\nDaytime: {Daylongphrase_3}\n    Chance of rain: {Dayrainprob_3}%\nNightime: {Nightlongphrase_3}\n    Chance of rain: {Nightrainprob_3}%\n-------- {Date_4} --------\nMinimum Temperature: {Mintemp_4}\nMaximum Temperature: {Maxtemp_4}\nDaytime: {Daylongphrase_4}\n  Chance of rain: {Dayrainprob_4}%\nNightime: {Nightlongphrase_4}\n    Chance of rain: {Nightrainprob_4}%\n-------- {Date_5} --------\nMinimum Temperature: {Mintemp_5}\nMaximum Temperature: {Maxtemp_5}\nDaytime: {Daylongphrase_5}\n    Chance of rain: {Dayrainprob_5}%\nNightime: {Nightlongphrase_5}\n    Chance of rain: {Nightrainprob_5}%" 
+        return f"5 Day Overview\n    The lowest temperature will be {convert_f_to_c((min(alldaysmin))[0])}, and will occur on {(min(alldaysmin))[1]}.\n    The highest temperature will be {convert_f_to_c((max(alldaysmax))[0])}, and will occur on {(max(alldaysmax))[1]}.\n    The average low this week is {(convert_f_to_c(low_avr))}.\n    The average high this week is {(convert_f_to_c(high_avr))}.\n\n-------- {Date_1} --------\nMinimum Temperature: {Mintemp_1}\nMaximum Temperature: {Maxtemp_1}\nDaytime: {Daylongphrase_1}\n    Chance of rain:  {Dayrainprob_1}%\nNighttime: {Nightlongphrase_1}\n    Chance of rain:  {Nightrainprob_1}%\n\n-------- {Date_2} --------\nMinimum Temperature: {Mintemp_2}\nMaximum Temperature: {Maxtemp_2}\nDaytime: {Daylongphrase_2}\n    Chance of rain:  {Dayrainprob_2}%\nNighttime: {Nightlongphrase_2}\n    Chance of rain:  {Nightrainprob_2}%\n\n-------- {Date_3} --------\nMinimum Temperature: {Mintemp_3}\nMaximum Temperature: {Maxtemp_3}\nDaytime: {Daylongphrase_3}\n    Chance of rain:  {Dayrainprob_3}%\nNighttime: {Nightlongphrase_3}\n    Chance of rain:  {Nightrainprob_3}%\n\n-------- {Date_4} --------\nMinimum Temperature: {Mintemp_4}\nMaximum Temperature: {Maxtemp_4}\nDaytime: {Daylongphrase_4}\n  Chance of rain:  {Dayrainprob_4}%\nNighttime: {Nightlongphrase_4}\n    Chance of rain:  {Nightrainprob_4}%\n\n-------- {Date_5} --------\nMinimum Temperature: {Mintemp_5}\nMaximum Temperature: {Maxtemp_5}\nDaytime: {Daylongphrase_5}\n    Chance of rain:  {Dayrainprob_5}%\nNighttime: {Nightlongphrase_5}\n    Chance of rain:  {Nightrainprob_5}%" 
         
     else:
     #10 Day Overview
@@ -206,19 +209,19 @@ def process_weather(forecast_file):
         extdaysmin_F = []
         extdaysmax_F = []
 
-        extdays_min.append([Date_1, Mintemp_1])
-        extdays_min.append([Date_2, Mintemp_2])
-        extdays_min.append([Date_3, Mintemp_3])
-        extdays_min.append([Date_4, Mintemp_4])
-        extdays_min.append([Date_5, Mintemp_5])
-        extdays_min.append([Date_6, Mintemp_6])
-        extdays_min.append([Date_7, Mintemp_7])
-        extdays_min.append([Date_8, Mintemp_8])
+        extdays_min.append([Mintemp_1, Date_1])
+        extdays_min.append([Mintemp_2, Date_2])
+        extdays_min.append([Mintemp_3, Date_3])
+        extdays_min.append([Mintemp_4, Date_4])
+        extdays_min.append([Mintemp_5, Date_5])
+        extdays_min.append([Mintemp_6, Date_6])
+        extdays_min.append([Mintemp_7, Date_7])
+        extdays_min.append([Mintemp_8, Date_8])
         
         extdays_max.append([Maxtemp_1, Date_1])
         extdays_max.append([Maxtemp_2, Date_2])
         extdays_max.append([Maxtemp_3, Date_3])
-        extdays_max.append([Maxtemp_4,Date_4])
+        extdays_max.append([Maxtemp_4, Date_4])
         extdays_max.append([Maxtemp_5, Date_5])
         extdays_max.append([Maxtemp_6, Date_6])
         extdays_max.append([Maxtemp_7, Date_6])
@@ -250,10 +253,10 @@ def process_weather(forecast_file):
         hightotal_2 = (sum(extdaysmax_F))
         high_avr_2 = float(calculate_mean(hightotal_2, highnum_items_2))
         print(Alldays)
-        return f"8 Day Overview\n    The lowest temperature will be {(min(extdays_min))[1]}, and will occur on {(min(extdays_min))[0]}.\n    The highest temperature will be {(max(extdays_max))[0]}, and will occur on {(max(extdays_max))[1]}.\n    The average low this week is {(convert_f_to_c(low_avr_2))}.\n    The average high this week is {(convert_f_to_c(high_avr_2))}.\n-------- {Date_1} --------\nMinimum Temperature: {Mintemp_1}\nMaximum Temperature: {Maxtemp_1}\nDaytime: {Daylongphrase_1}\n   Chance of rain: {Dayrainprob_1}%\nNightime: {Nightlongphrase_1}\n   Chance of rain: {Nightrainprob_1}%\n-------- {Date_2} --------\nMinimum Temperature: {Mintemp_2}\nMaximum Temperature: {Maxtemp_2}\nDaytime: {Daylongphrase_2}\n  Chance of rain: {Dayrainprob_2}%\nNightime: {Nightlongphrase_2}\n   Chance of rain: {Nightrainprob_2}%\n-------- {Date_3} --------\nMinimum Temperature: {Mintemp_3}\nMaximum Temperature: {Maxtemp_3}\nDaytime: {Daylongphrase_3}\n  Chance of rain: {Dayrainprob_3}%\nNightime: {Nightlongphrase_3}\n   Chance of rain: {Nightrainprob_3}%\n-------- {Date_4} --------\nMinimum Temperature: {Mintemp_4}\nMaximum Temperature: {Maxtemp_4}\nDaytime: {Daylongphrase_4}\n  Chance of rain: {Dayrainprob_4}%\nNightime: {Nightlongphrase_4}\n   Chance of rain: {Nightrainprob_4}%\n-------- {Date_5} --------\nMinimum Temperature: {Mintemp_5}\nMaximum Temperature: {Maxtemp_5}\nDaytime: {Daylongphrase_5}\n  Chance of rain: {Dayrainprob_5}%\nNightime: {Nightlongphrase_5}\n   Chance of rain: {Nightrainprob_5}%\n-------- {Date_6} --------\nMinimum Temperature: {Mintemp_6}\nMaximum Temperature: {Maxtemp_6}\nDaytime: {Daylongphrase_6}\n  Chance of rain: {Dayrainprob_6}%\nNightime: {Nightlongphrase_6}\n   Chance of rain: {Nightrainprob_6}%\n-------- {Date_7} --------\nMinimum Temperature: {Mintemp_7}\nMaximum Temperature: {Maxtemp_7}\nDaytime: {Daylongphrase_7}\n  Chance of rain: {Dayrainprob_7}%\nNightime: {Nightlongphrase_7}\n   Chance of rain: {Nightrainprob_7}%\n-------- {Date_8} --------\nMinimum Temperature: {Mintemp_8}\nMaximum Temperature: {Maxtemp_8}\nDaytime: {Daylongphrase_8}\n  Chance of rain: {Dayrainprob_8}%\nNightime: {Nightlongphrase_8}\n Chance of rain: {Nightrainprob_8}%"
+        return f"8 Day Overview\n    The lowest temperature will be {(min(extdays_min))[0]}, and will occur on {(min(extdays_min))[1]}.\n    The highest temperature will be {(max(extdays_max))[0]}, and will occur on {(max(extdays_max))[1]}.\n    The average low this week is {(convert_f_to_c(low_avr_2))}.\n    The average high this week is {(convert_f_to_c(high_avr_2))}.\n\n-------- {Date_1} --------\nMinimum Temperature: {Mintemp_1}\nMaximum Temperature: {Maxtemp_1}\nDaytime: {Daylongphrase_1}\n  Chance of rain: {Dayrainprob_1}%\nNighttime: {Nightlongphrase_1}\n  Chance of rain: {Nightrainprob_1}%\n\n-------- {Date_2} --------\nMinimum Temperature: {Mintemp_2}\nMaximum Temperature: {Maxtemp_2}\nDaytime: {Daylongphrase_2}\n    Chance of rain:  {Dayrainprob_2}%\nNighttime: {Nightlongphrase_2}\n    Chance of rain:  {Nightrainprob_2}%\n\n-------- {Date_3} --------\nMinimum Temperature: {Mintemp_3}\nMaximum Temperature: {Maxtemp_3}\nDaytime: {Daylongphrase_3}\n    Chance of rain:  {Dayrainprob_3}%\nNighttime: {Nightlongphrase_3}\n    Chance of rain:  {Nightrainprob_3}%\n\n-------- {Date_4} --------\nMinimum Temperature: {Mintemp_4}\nMaximum Temperature: {Maxtemp_4}\nDaytime: {Daylongphrase_4}\n    Chance of rain:  {Dayrainprob_4}%\nNighttime: {Nightlongphrase_4}\n    Chance of rain:  {Nightrainprob_4}%\n\n-------- {Date_5} --------\nMinimum Temperature: {Mintemp_5}\nMaximum Temperature: {Maxtemp_5}\nDaytime: {Daylongphrase_5}\n    Chance of rain:  {Dayrainprob_5}%\nNighttime: {Nightlongphrase_5}\n    Chance of rain:  {Nightrainprob_5}%\n-------- {Date_6} --------\nMinimum Temperature: {Mintemp_6}\nMaximum Temperature: {Maxtemp_6}\nDaytime: {Daylongphrase_6}\n  Chance of rain: {Dayrainprob_6}%\nNightime: {Nightlongphrase_6}\n   Chance of rain: {Nightrainprob_6}%\n-------- {Date_7} --------\nMinimum Temperature: {Mintemp_7}\nMaximum Temperature: {Maxtemp_7}\nDaytime: {Daylongphrase_7}\n  Chance of rain: {Dayrainprob_7}%\nNightime: {Nightlongphrase_7}\n   Chance of rain: {Nightrainprob_7}%\n-------- {Date_8} --------\nMinimum Temperature: {Mintemp_8}\nMaximum Temperature: {Maxtemp_8}\nDaytime: {Daylongphrase_8}\n  Chance of rain: {Dayrainprob_8}%\nNightime: {Nightlongphrase_8}\n Chance of rain: {Nightrainprob_8}%"
        
 if __name__ == "__main__":
-    print(process_weather("data/forecast_5days_a.json"))
+    print(process_weather("data/forecast_5days_b.json"))
     
 
 
