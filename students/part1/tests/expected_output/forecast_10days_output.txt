@@ -67,4 +67,3 @@ Daytime: Intervals of clouds and sunshine
     Chance of rain:  25%
 Nighttime: Patchy clouds
     Chance of rain:  3%
-
