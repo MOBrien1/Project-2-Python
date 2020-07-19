@@ -8,31 +8,65 @@ A single time series graph that contains both the minimum and maximum temperatur
 A single time series graph that contains the minimum, minimum “real feel”, and minimum “real feel
 shade” temperatures."""
 
+def convert_date(iso_string):
+    """Converts and ISO formatted date into a human readable format.
+    
+    Args:
+        iso_string: An ISO date string..
+    Returns:
+        A date formatted like: Weekday Date Month Year
+    """
+    d = datetime.strptime(iso_string, "%Y-%m-%dT%H:%M:%S%z")
+    return d.strftime('%A %d %B %Y')
 
-list = []
+def convert_f_to_c(temp_in_farenheit):
+    """Converts an temperature from farenheit to celcius
+
+    Args:
+        temp_in_farenheit: integer representing a temperature.
+    Returns:
+        An integer representing a temperature in degrees celcius.
+    """
+    temp_in_farenheit = (temp_in_farenheit - 32) / (9/5)
+    tempf_to_c = int(temp_in_farenheit)
+    return tempf_to_c 
+
+templist = []
+
 def jsondata (forecast_file):
     with open(forecast_file) as f:
         forecast_file = json.load(f)
 
     for day in forecast_file["DailyForecasts"]:
-        min_temp = day["Temperature"]["Minimum"]["Value"] 
-        max_temp = day["Temperature"]["Maximum"]["Value"]
+        date = convert_date(day["Date"])
+        min_temp = convert_f_to_c(day["Temperature"]["Minimum"]["Value"])
+        max_temp = convert_f_to_c(day["Temperature"]["Maximum"]["Value"])
 
-        temps = {'min':min_temp, 'max': max_temp}
-    #temps["Minimum Temperature"] = min_temp
-    #temps["Maximum Temperarute"] = max_temp
-        list.append (temps)
- 
+        temps = {"Date": date, "Min": min_temp, "Max": max_temp}
+
+        templist.append(temps)
+
         
 jsondata("data/forecast_5days_a.json")
 
-print(list)
+print(templist)
 
-#df = pd.read_JSON("file name")
+df = templist
+import plotly.graph_objs as go
 
 # Line Graphs
-#fig = px.line(df, x="", y="", title="")
-#fig.show()
+trace1 = go.Scatter (df,
+        x = ["Min"], 
+        y = ["Max"],
+        mode = "lines"
+    )
+plotdata = [trace1]
+graphlayout = dict(title="Daily Forecast Temperatures: Minimum & Maximum",
+              xaxis= [5, 10, 15, 20, 25, 30]
+             )
+fig = dict(data = plotdata, layout = graphlayout)
+fig.show()
+
 
 #fig = px.line(
     #df, 
@@ -43,10 +77,4 @@ print(list)
 #fig.show()
 
 #line
-#df_a = {
-    #"our_data": [123, 132, 654, 345, 125, 498],
-    #"more_data": [345, 67, 176, 245, 197, 391],
-    #"columns": ["a", "b", "c", "d", "e", "f"]
-#}
-#fig = px.line(df_a, y="our_data", x="columns")
-#fig.show()
+
