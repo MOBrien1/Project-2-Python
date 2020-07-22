@@ -55,17 +55,13 @@ df = templist
 import plotly.graph_objs as go
 
 # Line Graphs
-trace1 = go.Scatter (df,
-        x = ["Min"], 
-        y = ["Max"],
-        mode = "lines"
-    )
-plotdata = [trace1]
-graphlayout = dict(title="Daily Forecast Temperatures: Minimum & Maximum",
-              xaxis= [5, 10, 15, 20, 25, 30]
-             )
-fig = dict(data = plotdata, layout = graphlayout)
-fig.show()
+fig = px.line(
+    df, 
+    x=["Min"],
+    y=["Date"], 
+    title="Forecast Temperatures: Minimum & Maximum"
+)
+#fig.show()
 
 
 #fig = px.line(
