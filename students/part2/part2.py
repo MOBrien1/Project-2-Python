@@ -41,40 +41,54 @@ def jsondata (forecast_file):
         date = convert_date(day["Date"])
         min_temp = convert_f_to_c(day["Temperature"]["Minimum"]["Value"])
         max_temp = convert_f_to_c(day["Temperature"]["Maximum"]["Value"])
+        real_feel_c = convert_f_to_c(day["RealFeelTemperature"]["Minimum"]["Value"])
+        real_feel_shade_c = convert_f_to_c(day["RealFeelTemperatureShade"]["Minimum"]["Value"])
 
-        temps = {"Date": date, "Min": min_temp, "Max": max_temp}
+        temps = {"Date": date, "Min": min_temp, "Max": max_temp, 'Minimum Real Feel': real_feel_c, 'Minimum Real Feel Shade': real_feel_shade_c}
 
         templist.append(temps)
 
-        
 jsondata("data/forecast_5days_a.json")
 
-print(templist)
+df = pd.DataFrame(templist)
 
-df = templist
-import plotly.graph_objs as go
+fig1 = px.line(
+    df,  
+    x= "Date",
+    y= ["Min", "Max"],
+    title="Forecast Temperatures: Minimum & Maximum",
+    labels={
+    "date": "Date"}
+)
 
-# Line Graphs
-trace1 = go.Scatter (df,
-        x = ["Min"], 
-        y = ["Max"],
-        mode = "lines"
+fig1.update_layout(
+    yaxis_title = "Temperature (Degree's Celsius)",
+    legend_title = "Temperature",
+)
+
+fig1.update_traces(mode="lines+markers")
+fig1.show()
+
+fig2 = px.line(
+    df,  
+    x= "Date",
+    y= ["Min", "Minimum Real Feel", "Minimum Real Feel Shade"],
+    title="Forecast Temperatures: Minimum",
+    labels={"date": "Date"}
+)
+
+fig2.update_layout(
+    yaxis_title = "Temperature (C)",
+    legend_title = "Temperature",
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+    ),
+    template = "ggplot2"
     )
-plotdata = [trace1]
-graphlayout = dict(title="Daily Forecast Temperatures: Minimum & Maximum",
-              xaxis= [5, 10, 15, 20, 25, 30]
-             )
-fig = dict(data = plotdata, layout = graphlayout)
-fig.show()
 
-
-#fig = px.line(
-    #df, 
-    #x=[""], 
-    #y=[""], 
-    #title=""
-#)
-#fig.show()
-
-#line
-
+fig2.update_traces(mode="lines+markers")
+fig2.show()
